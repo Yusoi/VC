@@ -2,43 +2,41 @@ function [preprocessed_image, snr_noisy_image, seg_with_noise, seg_without_noise
 %MAIN_IMAGE_RECOGNITION Summary of this function goes here
 %   Detailed explanation goes here
     noisy_image = add_noise(image,noise_type,noise_parameters);
-    subplot(4,3,2);
+    subplot(2,3,2);
     title('Noisy Image');
     imshow(noisy_image);
     
-    %Noise Introduction
     if strcmp(noise_type,'salt_and_pepper')
         filtered_image = median_spacial_filter(noisy_image);
-        subplot(4,3,3);
+        subplot(2,3,3);
         title('Filtered Image');
         imshow(filtered_image);
     else
         filtered_image = 0;
     end
     
-    %Image check and appropriation
     if strcmp(image_input,'2')
         %Histogram equalization
         %preprocessed_image = histeq(filtered_image);
         [pixelCount, ~] = imhist(filtered_image);
-        subplot(4,3,4);
-        bar(pixelCount);
+        subplot(2,3,4);
         title('Histogram');
+        bar(pixelCount);
         
         preprocessed_image = medfilt2(filtered_image,[20 20]);
         preprocessed_image = threshold(preprocessed_image,190);
         preprocessed_image = imfill(preprocessed_image, 'holes');
         
-        %eroding image
-        SE = strel('disk',20,4);
-        preprocessed_image = imerode(preprocessed_image,SE);
+        /eroding 
+        SE = strel('disk',r,n)
+        preprocessed_image = imerode(preprocessed_image);
         
-        subplot(4,3,5);
+        subplot(2,3,5);
+        title('Histeq Image');
         RI = imref2d(size(preprocessed_image));
         imshow(preprocessed_image,RI);
-        title('Processed Image');
         
-        subplot(4,3,6);
+        subplot(2,3,6);
         [centers, radii, metric] = imfindcircles(preprocessed_image,[300 350],'ObjectPolarity','bright','Method','TwoStage','Sensitivity',0.95);
         numCircles = length(centers)
         viscircles(centers,radii,'EdgeColor','b');
@@ -49,7 +47,7 @@ function [preprocessed_image, snr_noisy_image, seg_with_noise, seg_without_noise
         %Histogram equalization
         %preprocessed_image = histeq(filtered_image);
         [pixelCount, ~] = imhist(filtered_image);
-        subplot(4,3,4);
+        subplot(2,3,4);
         title('Histogram');
         bar(pixelCount);
         
@@ -58,11 +56,11 @@ function [preprocessed_image, snr_noisy_image, seg_with_noise, seg_without_noise
         preprocessed_image = bwareaopen(preprocessed_image,1000,4);
         preprocessed_image = imfill(preprocessed_image, 'holes');
         
-        subplot(4,3,5);
+        subplot(2,3,5);
         title('Histeq Image');
         imshow(preprocessed_image);
         
-        subplot(4,3,6);
+        subplot(2,3,6);
         [centers, radii, metric] = imfindcircles(preprocessed_image,[400,500]);
         imshow(preprocessed_image);
         viscircles(centers,radii,'EdgeColor','b');
@@ -73,7 +71,7 @@ function [preprocessed_image, snr_noisy_image, seg_with_noise, seg_without_noise
         %Histogram equalization
         preprocessed_image = histeq(filtered_image);
         [pixelCount, ~] = imhist(filtered_image);
-        subplot(4,3,4);
+        subplot(2,3,4);
         title('Histogram');
         imshow(pixelCount);
         %bar(pixelCount);
@@ -84,7 +82,7 @@ function [preprocessed_image, snr_noisy_image, seg_with_noise, seg_without_noise
         %
         %preprocessed_image = imfill(preprocessed_image, 'holes');
         
-        subplot(4,3,5);
+        subplot(2,3,5);
         title('Histeq Image');
         RI = imref2d(size(preprocessed_image));
         imshow(preprocessed_image,RI);

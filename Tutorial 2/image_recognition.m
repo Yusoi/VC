@@ -13,8 +13,7 @@ end
 image = rgb2gray(image);
 
 grid on;
-
-subplot(2,3,1);
+subplot(4,3,1);
 title('Base Image');
 imshow(image);
 
