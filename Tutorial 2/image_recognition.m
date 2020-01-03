@@ -12,11 +12,6 @@ end
 
 image = rgb2gray(image);
 
-grid on;
-subplot(4,3,1);
-title('Base Image');
-imshow(image);
-
 noise_type_input = input('What noise type do you want to use? "salt_and_pepper" "gaussian" (Default "salt_and_pepper")\n','s');
 if strcmp(noise_type_input,'gaussian')
     noise_type = 'gaussian';
@@ -31,7 +26,9 @@ else
     noise_output = strcat(output,noise_type,'_',num2str(density_input));
 end
 
+figure;
+subplot(3,3,1);
+imshow(image);
+title('B/W Image');
 
-
-[preprocessed_image, snr_noisy_image, seg_with_noise, seg_without_noise, hist, coin_size_num_table] = main_image_recognition(image_input,image,noise_type,noise_parameters);
-
+main_image_recognition(image_input,image,noise_type,noise_parameters);
