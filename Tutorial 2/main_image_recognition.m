@@ -124,10 +124,5 @@ function [] = main_image_recognition(image_input,image,noise_type,noise_paramete
         RI = imref2d(size(preprocessed_image));
         imshow(preprocessed_image,RI);
     end
-    
-    seg_with_noise = 0;
-    seg_without_noise = 0;
-    hist = 0;
-    coin_size_num_table = 0;
 end
 
